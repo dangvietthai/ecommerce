@@ -1,6 +1,12 @@
 @echo off
-echo Installing Windows Service...
-sc create "LocalShopService" binPath= "%~dp0start-app.bat" start= auto
+cd /d %~dp0
+
+REM Create Windows Service
+sc create "LocalShopService" binPath= "%~dp0run-as-admin.bat" start= auto
 sc description "LocalShopService" "Local Shop Web Application Service"
-echo Service installed successfully!
+
+REM Start the service
+sc start LocalShopService
+
+echo Service has been installed and started successfully!
 pause 

@@ -10,8 +10,8 @@ app.prepare().then(() => {
   createServer((req, res) => {
     const parsedUrl = parse(req.url, true);
     handle(req, res, parsedUrl);
-  }).listen(3001, (err) => {
+  }).listen(80, (err) => {
     if (err) throw err;
-    console.log('> Ready on http://localhost:3001');
+    console.log('> Ready on http://localhost:80');
   });
 }); 

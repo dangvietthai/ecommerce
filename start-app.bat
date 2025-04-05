@@ -1,5 +1,12 @@
 @echo off
 cd /d %~dp0
-start /b nginx.exe
-npm run build
-node server.js 
+
+REM Kill any existing Node.js processes
+taskkill /F /IM node.exe
+
+REM Build and start Next.js app
+call npm run build
+start /b node server.js
+
+echo Application has been started successfully!
+pause 
