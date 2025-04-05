@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import crypto from 'crypto';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
@@ -52,10 +54,10 @@ export async function GET(request: Request) {
 
     // Redirect to success/failure page
     const redirectUrl = paymentStatus === 'paid'
-      ? `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?orderId=${orderId}`
-      : `${process.env.NEXT_PUBLIC_APP_URL}/checkout/failure?orderId=${orderId}`;
+      ? `/order-success?orderId=${orderId}`
+      : `/payment-result?vnp_ResponseCode=${rspCode}`;
 
-    return NextResponse.redirect(redirectUrl);
+    return NextResponse.redirect(new URL(redirectUrl, request.url));
   } catch (error) {
     console.error('Error processing VNPay callback:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

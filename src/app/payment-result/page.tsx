@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { CheckCircle, XCircle } from 'lucide-react';
 import Link from 'next/link';
 
-export default function PaymentResultPage() {
+function PaymentResultContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [status, setStatus] = useState<'success' | 'error' | null>(null);
@@ -74,5 +74,21 @@ export default function PaymentResultPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function PaymentResultPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="animate-pulse">
+          <div className="mx-auto h-12 w-12 rounded-full bg-gray-200"></div>
+          <div className="mt-6 h-8 w-48 mx-auto bg-gray-200 rounded"></div>
+          <div className="mt-2 h-4 w-64 mx-auto bg-gray-200 rounded"></div>
+        </div>
+      </div>
+    }>
+      <PaymentResultContent />
+    </Suspense>
   );
 } 

@@ -2,6 +2,8 @@ import { NextResponse, NextRequest } from 'next/server';
 import { verifyVNPayResponse } from '@/lib/vnpay';
 import { supabase } from '@/lib/supabase';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: NextRequest) {
   try {
     const searchParams = req.nextUrl.searchParams;
@@ -88,8 +90,8 @@ export async function GET(req: NextRequest) {
 
     // Redirect to order success/failure page
     const redirectUrl = responseCode === '00'
-      ? `/orders/${orderId}/success`
-      : `/orders/${orderId}/failed`;
+      ? `/order-success?orderId=${orderId}`
+      : `/payment-result?vnp_ResponseCode=${responseCode}`;
 
     return NextResponse.redirect(new URL(redirectUrl, req.url));
   } catch (error) {

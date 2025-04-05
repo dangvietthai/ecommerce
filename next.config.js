@@ -6,6 +6,14 @@ const nextConfig = {
       'devthai23.info.vn'
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/:path*',
+        destination: '/:path*',
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig 
